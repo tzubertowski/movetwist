@@ -1,0 +1,4 @@
+*.json.gzip
+db/
+configdb/
+node_modules/

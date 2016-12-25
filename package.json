@@ -1,0 +1,30 @@
+{
+  "name": "movetwist",
+  "version": "1.0.0",
+  "description": "Renting app api",
+  "main": "server.js",
+  "dependencies": {
+    "bunyan": "^1.8.5",
+    "restify": "^4.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server.js | bunyan -o short"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tzubertowski/movetwist.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb",
+    "renting"
+  ],
+  "author": "tzubertowski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tzubertowski/movetwist/issues"
+  },
+  "homepage": "https://github.com/tzubertowski/movetwist#readme"
+}
