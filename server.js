@@ -1,21 +1,22 @@
-var restify = require('restify');
-var port = process.env.PORT || 8080,
+const port = process.env.PORT || 8080,
     restify = require('restify');
     Logger = require('./module/utils/logger');
     logger = new Logger();
-var server = restify.createServer({
+const server = restify.createServer({
     name: 'MoveTwist',
     version: '1.0.0',
     log: logger.getSystemLogger()   // Pass our logger to restify.
 });
-require('./routes')[server];
+const route = require('./routes');
+
 server.use(restify.gzipResponse());
 server.use(restify.fullResponse());
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
+route(server);
 
 server.on('uncaughtException', function(req, res, route, err) {
-  var auditer = restify.auditLogger({log:log});
+  const auditer = restify.auditLogger({log:log});
   auditer(req, res, route, err);
   res.send(500, "Unexpected error occured");
 });

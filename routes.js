@@ -1,6 +1,8 @@
-module.exports = function(server) {
+function route (server) {
   server.get('health', function health(req, res, next) {
-    Resource = require('./module/controller/health');
+    const resource = require('./module/controller/health');
     resource.health(req, res, next);
   });
 }
+
+module.exports = route;
