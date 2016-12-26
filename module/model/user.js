@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
-const UserSchema = mongoose.Schema({
-  name: String,
-  password: { type: String, required: true }
+new Schema({
+    username: { type: String, required: true, index: { unique: true } },
+    password: { type: String, required: true },
+    loginAttempts: { type: Number, required: true, default: 0 },
+    lockUntil: { type: Number }
+});
+
+UserSchema.virtual('isLocked').get(function() {
+    return !!(this.lockUntil && this.lockUntil > Date.now());
 });
 
 UserSchema.pre(
@@ -32,5 +38,19 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
         cb(null, isMatch);
     });
 }
+
+UserSchema.methods.incLoginAttempts = function(cb) {
+    if (this.lockUntil && this.lockUntil < Date.now()) {
+        return this.update({
+            $set: { loginAttempts: 1 },
+            $unset: { lockUntil: 1 }
+        }, cb);
+    }
+    var updates = { $inc: { loginAttempts: 1 } };
+    if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
+        updates.$set = { lockUntil: Date.now() + LOCK_TIME };
+    }
+    return this.update(updates, cb);
+};
 
 module.exports = mongoose.model('Conversation', ConversationSchema);

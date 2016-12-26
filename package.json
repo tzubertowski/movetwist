@@ -4,6 +4,7 @@
   "description": "Renting app api",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^1.0.1",
     "bunyan": "^1.8.5",
     "mongoose": "^4.7.4",
     "restify": "^4.3.0"
