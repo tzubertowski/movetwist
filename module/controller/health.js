@@ -6,5 +6,4 @@ Health.health = function (req, res, next) {
   next();
 };
 
-
 module.exports = Health;

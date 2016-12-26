@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "bunyan": "^1.8.5",
+    "mongoose": "^4.7.4",
     "restify": "^4.3.0"
   },
   "devDependencies": {},

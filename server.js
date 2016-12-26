@@ -1,6 +1,11 @@
+/** mongoose setup **/
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGO_PORT_27017_TCP_ADDR + ':' + process.env.MONGO_PORT_27017_TCP_PORT);
+
+/** HTTP/restify setup **/
 const port = process.env.PORT || 8080,
     restify = require('restify');
-    Logger = require('./module/utils/logger');
+    Logger = require('./module/util/logger');
     logger = new Logger();
 const server = restify.createServer({
     name: 'MoveTwist',
@@ -8,13 +13,11 @@ const server = restify.createServer({
     log: logger.getSystemLogger()   // Pass our logger to restify.
 });
 const route = require('./routes');
-
 server.use(restify.gzipResponse());
 server.use(restify.fullResponse());
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 route(server);
-
 server.on('uncaughtException', function(req, res, route, err) {
   const auditer = restify.auditLogger({log:log});
   auditer(req, res, route, err);
